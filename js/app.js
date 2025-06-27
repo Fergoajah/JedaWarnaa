@@ -2,7 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // Definisi BASE untuk pendaftaran SW
-  const BASE = "/";
+  const BASE = "/JedaWarnaa/";
 
   // ----- Pendaftaran Service Worker & Penanganan Mode Offline -----
   if ("serviceWorker" in navigator) {
