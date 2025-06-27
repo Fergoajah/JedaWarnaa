@@ -1,28 +1,27 @@
-// sw.js - Dikonfigurasi untuk GitHub Pages
+// sw.js - Konfigurasi final dengan path relatif
 
-// NAIKKAN VERSI CACHE UNTUK MEMICU UPDATE
-const CACHE_NAME = 'jedawarna-github-v1.0'; 
-const BASE_URL = '/JedaWarnaa/';
+// Naikkan versi cache untuk memicu update
+const CACHE_NAME = 'jedawarna-final-v1.0'; 
 
-// Daftar aset yang dibutuhkan aplikasi untuk berjalan, sekarang dengan path yang benar
+// Daftar aset dengan path relatif dari root proyek
 const ASSETS_TO_CACHE = [
-  `${BASE_URL}`,
-  `${BASE_URL}index.html`,
-  `${BASE_URL}offline.html`,
-  `${BASE_URL}css/style.css`,
-  `${BASE_URL}js/app.js`,
-  `${BASE_URL}js/chroma.min.js`,
-  `${BASE_URL}js/color-thief.umd.js`,
-  `${BASE_URL}manifest.json`,
-  `${BASE_URL}icons/icon-192x192.png`,
-  `${BASE_URL}icons/icon-512x512.png`
+  './',
+  './index.html',
+  './offline.html',
+  './manifest.json',
+  './css/style.css',
+  './js/app.js',
+  './js/chroma.min.js',
+  './js/color-thief.umd.js',
+  './icons/icon-192x192.png',
+  './icons/icon-512x512.png'
 ];
 
-// Event 'install': Cache aset inti
+// Event 'install': Cache semua aset di atas
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('SW: Caching aset inti untuk GitHub Pages...');
+      console.log('SW: Caching aset inti dengan path relatif...');
       return cache.addAll(ASSETS_TO_CACHE);
     }).then(() => {
       self.skipWaiting();
@@ -30,14 +29,13 @@ self.addEventListener('install', event => {
   );
 });
 
-// Event 'activate': Bersihkan cache lama
+// Event 'activate': Bersihkan cache versi lama
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
         keys.map(key => {
           if (key !== CACHE_NAME) {
-            console.log('SW: Menghapus cache lama:', key);
             return caches.delete(key);
           }
         })
@@ -46,21 +44,21 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Event 'fetch': Terapkan strategi "Cache First"
+// Event 'fetch': Strategi "Cache First"
 self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') {
-    return;
-  }
+  if (event.request.method !== 'GET') return;
 
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
+      // Jika ada di cache, langsung berikan
       if (cachedResponse) {
         return cachedResponse;
       }
-
+      // Jika tidak, coba ambil dari network
       return fetch(event.request).catch(() => {
+        // Jika gagal total (dan yang diminta adalah halaman HTML), berikan fallback
         if (event.request.headers.get('accept').includes('text/html')) {
-          return caches.match(`${BASE_URL}offline.html`);
+          return caches.match('./offline.html');
         }
       });
     })

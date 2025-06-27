@@ -1,14 +1,12 @@
 // js/app.js - Versi Upgrade dengan Chroma.js dan ColorThief.js
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Definisi BASE untuk pendaftaran SW
-  const BASE = "/JedaWarnaa/";
-
   // ----- Pendaftaran Service Worker & Penanganan Mode Offline -----
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
+      // Daftarkan sw.js dari root folder proyek
       navigator.serviceWorker
-        .register(`${BASE}sw.js`) // Gunakan BASE di sini
+        .register("sw.js") 
         .then((reg) => console.log("ServiceWorker berhasil didaftarkan.", reg))
         .catch((err) => console.log("Pendaftaran ServiceWorker gagal: ", err));
     });
