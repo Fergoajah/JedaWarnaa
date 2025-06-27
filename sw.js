@@ -1,12 +1,12 @@
-// sw.js - Konfigurasi Definitif untuk GitHub Pages
+// sw.js - Strategi "Network First" yang Diadaptasi untuk JedaWarna
 
-// 1. NAMA CACHE & VERSI BARU
-// Mengubah nama ini akan memaksa browser menginstal ulang SW dan membuat cache baru.
-const CACHE_NAME = 'jedawarna-cache-v3';
+// Versi baru untuk memaksa update
+const CACHE_VERSION = 1;
+const CURRENT_CACHE = `jedawarna-network-first-v${CACHE_VERSION}`;
+const OFFLINE_PAGE = './offline.html'; // Tentukan halaman offline
 
-// 2. DAFTAR ASET UNTUK DI-CACHE
-// Semua path ditulis seolah-olah kita berada di folder root proyek.
-// Ini adalah daftar semua file yang dibutuhkan agar aplikasi berjalan offline.
+// DAFTAR ASET YANG BENAR DAN LENGKAP UNTUK DI-CACHE
+// Ini adalah kunci agar aplikasi bisa berfungsi.
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -16,65 +16,64 @@ const ASSETS_TO_CACHE = [
   './js/app.js',
   './js/chroma.min.js',
   './js/color-thief.umd.js',
-  './icons/icon-192x192.png',
-  './icons/icon-512x512.png'
 ];
 
-// 3. EVENT 'INSTALL': SIMPAN ASET KE CACHE
-// Ini terjadi hanya sekali saat Service Worker baru diinstal.
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('SW: Caching semua aset inti...');
-        // addAll adalah "semua atau tidak sama sekali". Jika satu file gagal, semua gagal.
-        return cache.addAll(ASSETS_TO_CACHE);
-      })
-      .then(() => {
-        self.skipWaiting(); // Aktifkan SW baru sesegera mungkin.
-      })
-  );
-});
-
-// 4. EVENT 'ACTIVATE': BERSIHKAN CACHE LAMA
-// Setelah SW baru aktif, kita hapus cache dari versi sebelumnya.
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys => {
+// Saat aktivasi, bersihkan cache lama
+self.addEventListener('activate', evt =>
+  evt.waitUntil(
+    caches.keys().then(cacheNames => {
       return Promise.all(
-        keys.map(key => {
-          if (key !== CACHE_NAME) {
-            console.log('SW: Menghapus cache lama:', key);
-            return caches.delete(key);
+        cacheNames.map(cacheName => {
+          if (cacheName !== CURRENT_CACHE) {
+            return caches.delete(cacheName);
           }
         })
       );
-    }).then(() => {
-      return self.clients.claim();
+    }).then(() => self.clients.claim())
+  )
+);
+
+// Saat instalasi, simpan semua aset penting ke cache
+self.addEventListener('install', evt =>
+  evt.waitUntil(
+    caches.open(CURRENT_CACHE).then(cache => {
+      console.log('SW: Caching aset penting untuk mode offline...');
+      return cache.addAll(ASSETS_TO_CACHE);
+    }).then(() => self.skipWaiting())
+  )
+);
+
+// Fungsi untuk mengambil dari jaringan (dengan timeout)
+const fromNetwork = (request, timeout) =>
+  new Promise((fulfill, reject) => {
+    const timeoutId = setTimeout(reject, timeout);
+    fetch(request).then(response => {
+      clearTimeout(timeoutId);
+      fulfill(response);
+    }, reject);
+  });
+
+// Fungsi untuk mengambil dari cache
+const fromCache = request =>
+  caches
+    .open(CURRENT_CACHE)
+    .then(cache =>
+      cache
+        .match(request)
+        .then(matching => matching || cache.match(OFFLINE_PAGE)) // Jika tidak ada, beri halaman offline
+    );
+
+// Strategi fetch utama
+self.addEventListener('fetch', evt => {
+  // Hanya proses request GET
+  if (evt.request.method !== 'GET') return;
+
+  evt.respondWith(
+    // Coba ambil dari jaringan dulu (timeout 5 detik)
+    fromNetwork(evt.request, 5000).catch(() => {
+        // Jika gagal, ambil dari cache
+        console.log(`SW: Gagal mengambil ${evt.request.url} dari network, beralih ke cache.`);
+        return fromCache(evt.request);
     })
-  );
-});
-
-// 5. EVENT 'FETCH': MENYEDIAKAN ASET SAAT OFFLINE
-// Ini adalah inti dari fungsionalitas offline.
-self.addEventListener('fetch', event => {
-  // Hanya proses permintaan GET
-  if (event.request.method !== 'GET') {
-    return;
-  }
-
-  // Strategi: Cache First (Cari di Cache Dulu)
-  event.respondWith(
-    caches.match(event.request)
-      .then(cachedResponse => {
-        // Jika file ditemukan di cache, langsung berikan. Ini yang membuatnya bekerja offline.
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-
-        // Jika tidak ada di cache, coba ambil dari internet.
-        // Ini penting agar kita bisa mendapat update jika ada.
-        return fetch(event.request);
-      })
   );
 });
