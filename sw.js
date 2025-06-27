@@ -1,14 +1,6 @@
-// sw.js - Disesuaikan dengan Pola yang Anda Inginkan
-
-// NAIKKAN VERSI CACHE SETIAP KALI ADA PERUBAHAN
 const CACHE_NAME = 'jedawarna-network-first-v1.0';
 
-// ====================================================================
-//          ↓↓↓      KONFIGURASI BASE URL PROYEK ANDA      ↓↓↓
-// ====================================================================
-// Sesuaikan jika perlu. Harus ada '/' di awal dan di akhir.
 const BASE = '/Pallete/';
-// ====================================================================
 
 // Aset inti yang wajib di-cache saat instalasi
 const ASSETS_TO_CACHE = [
