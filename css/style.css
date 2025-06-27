@@ -31,7 +31,7 @@ header {
 header h1 {
     color: var(--heading-color);
     font-weight: 700;
-    font-size: 2.5rem;
+    font-size: 3.2rem;
     margin-bottom: 0.5rem;
 }
 
@@ -217,7 +217,7 @@ footer {
     text-align: center;
     padding: 2rem 1.5rem;
     color: #5A677B;
-    font-size: 0.9rem;
+    font-size: 1.0rem;
 }
 
 
