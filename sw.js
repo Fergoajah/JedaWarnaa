@@ -7,14 +7,14 @@ const CACHE_NAME = 'jedawarna-network-first-v1.0';
 //          ↓↓↓      KONFIGURASI BASE URL PROYEK ANDA      ↓↓↓
 // ====================================================================
 // Sesuaikan jika perlu. Harus ada '/' di awal dan di akhir.
-const BASE = '/J/';
+const BASE = '/Pallete/';
 // ====================================================================
 
 // Aset inti yang wajib di-cache saat instalasi
 const ASSETS_TO_CACHE = [
   `${BASE}`,
   `${BASE}index.html`,
-  `${BASE}offline.html`, // Wajib ada untuk fallback
+  `${BASE}offline.html`,
   `${BASE}css/style.css`,
   `${BASE}js/app.js`,
   `${BASE}js/chroma.min.js`,
