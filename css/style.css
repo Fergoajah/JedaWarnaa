@@ -31,7 +31,7 @@ header {
 header h1 {
     color: var(--heading-color);
     font-weight: 700;
-    font-size: 3.2rem;
+    font-size: 2.5rem;
     margin-bottom: 0.5rem;
 }
 
@@ -119,8 +119,10 @@ h2 {
     gap: 20px;
 }
 
-input:where([type="color"]){
-    -webkit-appearance: none;
+/* --- PERUBAHAN DI SINI --- */
+input[type="color"] {
+    -webkit-appearance: none; /* Untuk Chrome, Safari, dll. */
+    appearance: none; /* Versi standar untuk kompatibilitas */
     width: 60px;
     height: 60px;
     border: 2px solid var(--subtle-border-color);
@@ -129,17 +131,18 @@ input:where([type="color"]){
     background-color: transparent;
     transition: transform 0.2s ease;
 }
+/* -------------------------- */
 
-input:where([type="color"])::-webkit-color-swatch-wrapper {
+input[type="color"]::-webkit-color-swatch-wrapper {
     padding: 0;
 }
 
-input:where([type="color"])::-webkit-color-swatch {
+input[type="color"]::-webkit-color-swatch {
     border: none;
     border-radius: 50%;
 }
 
-input:where([type="color"]):hover {
+input[type="color"]:hover {
     transform: scale(1.1);
 }
 
@@ -217,10 +220,13 @@ footer {
     text-align: center;
     padding: 2rem 1.5rem;
     color: #5A677B;
-    font-size: 1.0rem;
+    font-size: 0.9rem;
 }
 
 
+/* =================================
+   GAYA UNTUK TAMPILAN MOBILE (RESPONSIVE) - DISEMPURNAKAN
+   ================================= */
 @media (max-width: 768px) {
 
     main {
@@ -233,7 +239,7 @@ footer {
     }
 
     header h1 {
-        font-size: 2rem;
+        font-size: 2.4rem;
     }
     
     section {
