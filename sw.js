@@ -1,11 +1,12 @@
 // sw.js - Konfigurasi final dengan path relatif
 
 // Naikkan versi cache untuk memicu update
-const CACHE_NAME = 'jedawarna-final-v1.0'; 
+const CACHE_NAME = 'jedawarna-final-v1.1'; 
 
 // Daftar aset dengan path relatif dari root proyek
 const ASSETS_TO_CACHE = [
   './',
+  '/',
   './index.html',
   './offline.html',
   './manifest.json',
@@ -50,15 +51,11 @@ self.addEventListener('fetch', event => {
 
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
-      // Jika ada di cache, langsung berikan
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      // Jika tidak, coba ambil dari network
+      if (cachedResponse) return cachedResponse;
+  
       return fetch(event.request).catch(() => {
-        // Jika gagal total (dan yang diminta adalah halaman HTML), berikan fallback
-        if (event.request.headers.get('accept').includes('text/html')) {
-          return caches.match('./offline.html');
+        if (event.request.mode === 'navigate') {
+          return caches.match('./index.html');
         }
       });
     })
