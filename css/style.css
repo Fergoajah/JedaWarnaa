@@ -36,8 +36,8 @@ header h1 {
 }
 
 header p {
-    font-size: 1.2rem;
-    color: #858181;
+    font-size: 1.1rem;
+    color: #5A677B;
 }
 
 main {
@@ -217,5 +217,70 @@ footer {
     text-align: center;
     padding: 2rem 1.5rem;
     color: #5A677B;
-    font-size: 1.0rem;
+    font-size: 0.9rem;
+}
+
+
+/* =================================
+   GAYA UNTUK TAMPILAN MOBILE (RESPONSIVE) - DISEMPURNAKAN
+   ================================= */
+@media (max-width: 768px) {
+
+    main {
+        padding: 0 1rem 3rem 1rem;
+        gap: 1.5rem;
+    }
+    
+    header {
+        padding: 2rem 1rem;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    section {
+        padding: 1.5rem;
+    }
+
+    h2 {
+        margin-bottom: 1.5rem;
+        font-size: 1.25rem;
+    }
+    
+    .picker-wrapper {
+        flex-direction: column; /* Info warna jadi tersusun ke bawah */
+        text-align: center;     /* dan berada di tengah */
+    }
+
+    .contrast-inputs {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    #contrast-preview {
+        padding: 2rem;
+        font-size: 1.2rem;
+    }
+    
+    button {
+        padding: 0.9rem 1.5rem;
+        width: 100%; /* Tombol memenuhi lebar agar mudah disentuh */
+        box-sizing: border-box; /* Pastikan padding tidak membuat lebar berlebih */
+    }
+
+    /* Ini bagian penting untuk Palette Generator */
+    .palette-container {
+        flex-direction: column; /* Palet warna tersusun ke bawah */
+        height: auto; /* Tinggi menjadi otomatis */
+    }
+    .color-box {
+        flex: 1; /* Setiap kotak warna punya tinggi yang sama */
+        padding-top: 1rem; /* Beri sedikit padding atas */
+        padding-bottom: 1rem;
+        font-size: 1rem; /* Perbesar font agar terbaca */
+    }
+    .color-box:hover {
+        flex: 1; /* Nonaktifkan efek hover zoom di mobile */
+    }
 }
