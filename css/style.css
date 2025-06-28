@@ -222,8 +222,44 @@ footer {
     color: #5A677B;
     font-size: 0.9rem;
 }
+.header-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem; /* Jarak antara judul dan tombol */
+}
 
+/* Gaya untuk tombol instalasi */
+.install-button {
+    display: inline-flex; /* Agar tombol pas dengan ikon di dalamnya */
+    align-items: center;
+    justify-content: center;
+    width: 48px;  /* Ukuran tombol dibuat kotak */
+    height: 48px;
+    padding: 0; /* Hapus padding default */
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%; /* Membuat tombol menjadi bulat */
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
 
+.install-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.15);
+}
+
+.install-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+.install-icon-img {
+    width: 24px;
+    height: 24px;
+}
 /* =================================
    GAYA UNTUK TAMPILAN MOBILE (RESPONSIVE) - DISEMPURNAKAN
    ================================= */
