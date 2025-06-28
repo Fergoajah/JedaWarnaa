@@ -234,10 +234,10 @@ footer {
     display: inline-flex; /* Agar tombol pas dengan ikon di dalamnya */
     align-items: center;
     justify-content: center;
-    width: 48px;  /* Ukuran tombol dibuat kotak */
-    height: 48px;
+    width: 60px;  /* Ukuran tombol dibuat kotak */
+    height: 60px;
     padding: 0; /* Hapus padding default */
-    background-color: var(--primary-color);
+    background-color: #ffff;
     color: white;
     border: none;
     border-radius: 50%; /* Membuat tombol menjadi bulat */
@@ -251,14 +251,9 @@ footer {
     box-shadow: 0 7px 20px rgba(0, 0, 0, 0.15);
 }
 
-.install-button svg {
-    width: 24px;
-    height: 24px;
-}
-
 .install-icon-img {
-    width: 24px;
-    height: 24px;
+    width: 36px;
+    height: 36px;
 }
 /* =================================
    GAYA UNTUK TAMPILAN MOBILE (RESPONSIVE) - DISEMPURNAKAN
