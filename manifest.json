@@ -1,37 +1,21 @@
 {
     "name": "JedaWarna",
     "short_name": "JedaWarna",
-    "start_url": "/JedaWarnaa/",
-    "display": "standalone",
-    "background_color": "#E0F2FE",
-    "theme_color": "#3B82F6",
     "description": "Alat bantu palet warna yang elegan dan sederhana.",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#FFFFFF",
+    "theme_color": "#3B82F6",
     "icons": [
-        {
-            "src": "/JedaWarnaa/icons/192x192.jpg",
-            "sizes": "192x192",
-            "type": "image/jpg"
-        },
-        {
-            "src": "/JedaWarnaa/icons/512x512.jpg",
-            "sizes": "512x512",
-            "type": "image/jpg"
-        }
-    ],
-    "screenshots": [
-    {
-      "src": "/JedaWarnaa/screenshots/screenshot-desktop.png",
-      "sizes": "1920x964",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Tampilan Desktop JedaWarna"
-    },
-    {
-      "src": "/JedaWarnaa/screenshots/screenshot-mobile.png",
-      "sizes": "391x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Tampilan Mobile JedaWarna"
-    }
-  ]
-}
+      {
+        "src": "icons/192x192.jpg",
+        "sizes": "192x192",
+        "type": "image/jpg"
+      },
+      {
+        "src": "icons/512x512.jpg",
+        "sizes": "512x512",
+        "type": "image/jpg"
+      }
+    ]
+  }
