@@ -25,14 +25,14 @@
     "screenshots": [
       {
         "src": "/JedaWarnaa/screenshots/screenshot-desktop.png",
-        "sizes": "1280x720",
+        "sizes": "1920x964",
         "type": "image/png",
         "form_factor": "wide",
         "label": "Tampilan Desktop JedaWarna"
       },
       {
         "src": "/JedaWarnaa/screenshots/screenshot-mobile.png",
-        "sizes": "540x720",
+        "sizes": "391x844",
         "type": "image/png",
         "form_factor": "narrow",
         "label": "Tampilan Mobile JedaWarna"
