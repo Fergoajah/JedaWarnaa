@@ -4,36 +4,18 @@
     "description": "Alat bantu palet warna yang elegan dan sederhana.",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#E0F2FE",
+    "background_color": "#FFFFFF",
     "theme_color": "#3B82F6",
     "icons": [
       {
         "src": "icons/192x192.jpg",
         "sizes": "192x192",
-        "type": "image/jpg",
-        "purpose": "any"
+        "type": "image/jpg"
       },
       {
         "src": "icons/512x512.jpg",
         "sizes": "512x512",
-        "type": "image/jpg",
-        "purpose": "any"
-      }
-    ],
-    "screenshots": [
-      {
-        "src": "/JedaWarnaa/screenshots/screenshot-desktop.png",
-        "sizes": "1920x964",
-        "type": "image/png",
-        "form_factor": "wide",
-        "label": "Tampilan Desktop JedaWarna"
-      },
-      {
-        "src": "/JedaWarnaa/screenshots/screenshot-mobile.png",
-        "sizes": "391x844",
-        "type": "image/png",
-        "form_factor": "narrow",
-        "label": "Tampilan Mobile JedaWarna"
+        "type": "image/jpg"
       }
     ]
   }
