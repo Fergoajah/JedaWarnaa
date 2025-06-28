@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
           navigator.serviceWorker
-              .register("sw.js") // Pastikan path ke sw.js benar
+              .register("./sw.js")
               .then((reg) => console.log("ServiceWorker berhasil didaftarkan.", reg))
               .catch((err) => console.log("Pendaftaran ServiceWorker gagal: ", err));
       });
@@ -14,63 +14,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- 2. LOGIKA UNTUK NOTIFIKASI OFFLINE ---
   const offlineNotification = document.getElementById("offline-notification");
-  const updateOnlineStatus = () => {
-      if (offlineNotification) {
+  if (offlineNotification) {
+      const updateOnlineStatus = () => {
           offlineNotification.style.display = navigator.onLine ? "none" : "block";
-      }
-  };
-  window.addEventListener("online", updateOnlineStatus);
-  window.addEventListener("offline", updateOnlineStatus);
-  updateOnlineStatus();
-
-  // --- 3. LOGIKA UNTUK INSTALASI PWA ---
-  const installButton = document.getElementById('install-button');
+      };
+      window.addEventListener("online", updateOnlineStatus);
+      window.addEventListener("offline", updateOnlineStatus);
+      updateOnlineStatus();
+  }
+  
+  // --- 3. LOGIKA INSTALASI PWA (SESUAI KODE ANDA) ---
   let deferredPrompt;
 
   window.addEventListener('beforeinstallprompt', (e) => {
-      // Mencegah prompt bawaan browser muncul
+      // Cegah browser memunculkan prompt default
       e.preventDefault();
-      // Simpan event agar bisa dipicu nanti
       deferredPrompt = e;
-      // Tampilkan tombol instalasi kita
-      if (installButton) {
-          installButton.style.display = 'inline-flex';
-      }
-      console.log(`'beforeinstallprompt' event diaktifkan. Aplikasi siap diinstal.`);
-  });
+      console.log(`'beforeinstallprompt' event diaktifkan. Siap untuk menampilkan tombol instalasi.`);
 
-  if (installButton) {
-      installButton.addEventListener('click', async () => {
-          if (deferredPrompt) {
-              // Sembunyikan tombol kita sebelum menampilkan prompt
-              installButton.style.display = 'none';
-              
-              // Tampilkan prompt instalasi
-              deferredPrompt.prompt();
-              
-              // Tunggu pengguna merespons
-              const { outcome } = await deferredPrompt.userChoice;
-              console.log(`Respons pengguna: ${outcome}`);
-              
-              // Event ini hanya bisa digunakan sekali
+      // Hapus tombol lama jika ada, untuk mencegah duplikat
+      const oldInstallButton = document.getElementById('manual-install-button');
+      if(oldInstallButton) {
+          oldInstallButton.remove();
+      }
+
+      // Buat tombol install manual
+      const installButton = document.createElement('button');
+      installButton.id = 'manual-install-button'; // Beri ID agar mudah dicari
+      installButton.textContent = 'Pasang ke Perangkat';
+      installButton.style.marginTop = '20px';
+      installButton.style.padding = '10px 20px';
+      installButton.style.fontSize = '1rem';
+      installButton.style.cursor = 'pointer';
+      installButton.style.width = 'auto'; // Pastikan lebar tombol pas dengan konten
+
+      const infoDiv = document.getElementById('pwa-info');
+      if (infoDiv) {
+          infoDiv.appendChild(installButton);
+      }
+
+      installButton.addEventListener('click', () => {
+          installButton.remove(); // Hapus tombol setelah diklik
+          deferredPrompt.prompt();
+
+          deferredPrompt.userChoice.then(choice => {
+              if (choice.outcome === 'accepted') {
+                  console.log('Pengguna menyetujui pemasangan.');
+              } else {
+                  console.log('Pengguna membatalkan pemasangan.');
+              }
               deferredPrompt = null;
-          }
+          });
       });
-  }
-
-  window.addEventListener('appinstalled', () => {
-      // Sembunyikan tombol jika aplikasi sudah diinstal
-      if (installButton) {
-          installButton.style.display = 'none';
-      }
-      deferredPrompt = null;
-      console.log('Aplikasi JedaWarna berhasil diinstal!');
   });
-
 
   // --- 4. SEMUA FUNGSI APLIKASI ANDA YANG LAIN ---
-  // (Kode untuk color picker, palette generator, dll. letakkan di sini)
-
   const colorPicker = document.getElementById("color-picker");
   const hexCode = document.getElementById("hex-code");
   const rgbCode = document.getElementById("rgb-code");
