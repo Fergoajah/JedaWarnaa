@@ -1,4 +1,3 @@
-// Versi baru untuk memaksa update
 const CACHE_VERSION = 1;
 const CURRENT_CACHE = `jedawarna-network-first-v${CACHE_VERSION}`;
 const OFFLINE_PAGE = './offline.html';
