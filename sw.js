@@ -1,10 +1,9 @@
 // Versi baru untuk memaksa update
 const CACHE_VERSION = 1;
 const CURRENT_CACHE = `jedawarna-network-first-v${CACHE_VERSION}`;
-const OFFLINE_PAGE = './offline.html'; // Tentukan halaman offline
+const OFFLINE_PAGE = './offline.html';
 
-// DAFTAR ASET YANG BENAR DAN LENGKAP UNTUK DI-CACHE
-// Ini adalah kunci agar aplikasi bisa berfungsi.
+// DAFTAR ASET UNTUK DI-CACHE
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -15,7 +14,8 @@ const ASSETS_TO_CACHE = [
   './js/chroma.min.js',
   './js/color-thief.umd.js',
   './icons/icon-192.png',
-  './icons/icon-512.png'
+  './icons/icon-512.png',
+  'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'
 ];
 
 // Saat aktivasi, bersihkan cache lama

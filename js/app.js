@@ -1,42 +1,21 @@
-// File: js/app.js (Versi Perbaikan)
-
 document.addEventListener("DOMContentLoaded", () => {
   // --- 1. LOGIKA INSTALASI PWA ---
   let deferredPrompt;
   const installButton = document.getElementById("install");
-  const pwaStatusOutput = document.getElementById("pwa-status");
-
-  function showPwaStatus(text, append = false) {
-    if (pwaStatusOutput) {
-      pwaStatusOutput.innerHTML = append ? `${pwaStatusOutput.innerHTML}<br>${text}` : text;
-    }
-  }
 
   window.addEventListener("beforeinstallprompt", (e) => {
-    // Mencegah prompt mini-infobar default muncul
     e.preventDefault();
-    // Simpan event untuk digunakan nanti
     deferredPrompt = e;
-    // Tampilkan tombol instalasi kustom kita
     if (installButton) {
       installButton.style.display = "inline-flex";
     }
-    showPwaStatus("✅ Aplikasi siap diinstal!", true);
   });
 
   async function installApp() {
     if (deferredPrompt) {
       deferredPrompt.prompt();
-      showPwaStatus("🆗 Dialog instalasi telah dibuka...", true);
-      const { outcome } = await deferredPrompt.userChoice;
+      await deferredPrompt.userChoice;
       deferredPrompt = null;
-
-      if (outcome === "accepted") {
-        showPwaStatus("😀 Pengguna menerima instalasi. Terima kasih!", true);
-      } else {
-        showPwaStatus("😟 Pengguna membatalkan instalasi.", true);
-      }
-
       if (installButton) {
         installButton.style.display = "none";
       }
@@ -49,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("appinstalled", () => {
     deferredPrompt = null;
-    showPwaStatus("✅ Aplikasi berhasil diinstal!", true);
   });
 
   // --- 2. PENDAFTARAN SERVICE WORKER ---
@@ -58,17 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .register("./sw.js")
       .then((reg) => console.log("ServiceWorker berhasil didaftarkan.", reg))
       .catch((err) => console.log("Pendaftaran ServiceWorker gagal: ", err));
-  } else {
-      showPwaStatus("❌ Browser ini tidak mendukung Service Worker.");
   }
-  
-  // Cek apakah browser mendukung event instalasi
-  if ("BeforeInstallPromptEvent" in window) {
-      showPwaStatus("⏳ Menunggu sinyal instalasi dari browser...");
-  } else {
-      showPwaStatus("❌ Browser ini tidak mendukung fitur instalasi PWA.");
-  }
-
 
   // --- 3. LOGIKA NOTIFIKASI OFFLINE ---
   const offlineNotification = document.getElementById("offline-notification");
@@ -81,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateOnlineStatus();
   }
 
-  // --- 4. SEMUA FUNGSI APLIKASI ANDA YANG LAIN ---
+  // --- 4. LOGIKA UTAMA APLIKASI (Color Palette, Kontras, dll) ---
   const colorPicker = document.getElementById("color-picker");
   const hexCode = document.getElementById("hex-code");
   const rgbCode = document.getElementById("rgb-code");
@@ -214,7 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
     contrastColor2.addEventListener("input", updateContrastChecker);
   }
 
-  // Inisialisasi Aplikasi
   if (colorPicker) {
     updateColorPicker(colorPicker.value);
     generatePalette();
