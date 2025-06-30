@@ -1,4 +1,4 @@
-![icon-desktop](https://github.com/user-attachments/assets/218a1593-d9e9-4eb3-bb9c-0d04e3cb9323)
+![20250630_105458](https://github.com/user-attachments/assets/04ef683f-33c8-4d7c-b2eb-4cd838ae601c)
 
 # 🎨 JedaWarna - Aplikasi Palet Warna Berbasis Web
 
