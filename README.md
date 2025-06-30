@@ -20,8 +20,6 @@ Unggah sebuah gambar dan biarkan aplikasi mengungkap kisah dari warna yang terse
 🧪 **Pemeriksa Kontras Warna (Contrast Checker)**  
 Pastikan setiap kata dalam cerita sampai dengan jelas dengan memeriksa hubungan antara dua warna.
 
----
-
 --- 
 
 ## 🚀 Fitur Progressive Web App (PWA)
